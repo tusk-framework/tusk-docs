@@ -23,8 +23,9 @@ nav:
       - Your First App: getting-started/first-app.md
   - Architecture:
       - Overview: architecture/overview.md
+      - Native Engine: architecture/engine.md
       - Core (DI): architecture/core.md
-      - Runtime (Supervisor): architecture/runtime.md
+      - Runtime (IPC Runner): architecture/runtime.md
       - Web (HTTP): architecture/web.md
       - Data (Repository): architecture/data.md
       - Micro (Services): architecture/micro.md

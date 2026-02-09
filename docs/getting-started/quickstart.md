@@ -5,7 +5,7 @@ This guide will walk you through creating your first Tusk application in under 5
 ## Create a Project
 
 ```bash
-php tusk.phar init my-api
+tusk init my-api
 cd my-api
 ```
 
@@ -23,21 +23,24 @@ composer install
 
 ## Run the Server
 
-### Option 1: Native Server (Development)
+### Option 1: Native Startup (Recommended)
 
 ```bash
-php ../tusk.phar run public/index.php
+tusk start
+```
+
+This boots the Go engine and spawns PHP workers automatically. Visit `http://localhost:8080`.
+
+### Option 2: Docker (Containerized)
+
+If you have Docker installed, you can pull the official engine image:
+
+```bash
+docker pull ghcr.io/tusk-framework/tusk-engine:main
+docker run -p 8080:8080 -v $(pwd):/app ghcr.io/tusk-framework/tusk-engine:main
 ```
 
 Visit `http://localhost:8080`
-
-### Option 2: Docker (Production-like)
-
-```bash
-docker-compose up
-```
-
-Visit `http://localhost:8000`
 
 ## Your First Endpoint
 

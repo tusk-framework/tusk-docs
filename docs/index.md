@@ -6,25 +6,24 @@ Tusk is a modern, lightweight PHP framework designed for building high-performan
 
 ## Key Features
 
-- **Zero-Dependency CLI**: Scaffold projects instantly with `tusk.phar`
-- **Native HTTP Server**: Run without Nginx/Apache using pure PHP sockets
-- **Dependency Injection**: Powerful container with attribute-based configuration
-- **Repository Pattern**: Clean data access with PDO abstraction
-- **Microservice Ready**: Built-in health checks, metrics, and RPC interfaces
-- **Process Management**: Supervisor-based runtime for long-running workers
+- **Native Go Engine**: Replaces Nginx and PHP-FPM with a single, high-performance Go binary.
+- **Unified CLI**: One tool (`tusk`) for server management, scaffolding, and custom scripts.
+- **Persistent Runtime**: Applications stay in memory, drastically reducing latency.
+- **Sidecar PHP**: Automatic management of a portable PHP runtime for zero-dependency deployment.
+- **Domain-First Framework**: Clean architecture patterns (DI, Repository, Events) built for performance.
 
 ## Quick Start
 
 ```bash
-# Download the CLI
-wget https://github.com/tusk-framework/tusk-cli/releases/latest/download/tusk.phar
+# Install Tusk globally
+curl -sSL https://tusk.sh/install.sh | bash
 
-# Create a new project
-php tusk.phar init my-app
+# Create a project
+tusk init my-app
 
-# Start the server
+# Start the runtime
 cd my-app
-php tusk.phar run public/index.php
+tusk start
 ```
 
 Visit `http://localhost:8080` to see your app running!

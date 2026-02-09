@@ -1,31 +1,22 @@
-# Runtime (Supervisor)
+## The Runner (`Tusk\Runtime\Runner`)
 
-The `tusk-runtime` component provides process management and supervision.
-
-## Kernel
-
-The `Kernel` class orchestrates application lifecycle.
+The `Runner` is the heart of the PHP worker. It handles the continuous IPC loop with the Go Master Process.
 
 ```php
-use Tusk\Runtime\Kernel;
-use Tusk\Core\Container\Container;
+use Tusk\Runtime\Runner;
 
-$container = new Container();
-$kernel = new Kernel($container);
-$kernel->start();
+// Runner::run() starts the blocking NDJSON loop
+Runner::run($kernel);
 ```
 
-## Supervisor
+### IPC Lifecycle
+1. **Wait**: The Runner waits for a newline-delimited JSON string on `stdin`.
+2. **Boot**: It parses the request and executes the Kernel.
+3. **Flush**: It writes the response as NDJSON to `stdout` and signals readiness for the next request.
 
-Manages long-running worker processes with automatic restart on failure.
+## Kernel Integration
 
-```php
-use Tusk\Runtime\Supervisor;
-
-$supervisor = new Supervisor();
-$supervisor->addWorker(new QueueWorker());
-$supervisor->run();
-```
+The `Kernel` manages the application state across multiple requests. Because workers are persistent, the Kernel can cache containers, DB connections, and pre-compiled templates.
 
 ## Process Manager
 

@@ -114,4 +114,4 @@ curl -X POST http://localhost:8080/todos \
   -d '{"title":"Learn Tusk"}'
 ```
 
-Congratulations! You've built a working API with Tusk. 🎉
+Congratulations! You've built a working API with Tusk.

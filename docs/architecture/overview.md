@@ -13,23 +13,26 @@ Tusk is built on a modular, layered architecture that separates concerns and pro
 
 ```
 ┌─────────────────────────────────────┐
-│         Application Layer           │
-│    (Your Controllers, Services)     │
+│          External Traffic           │
+│        (HTTP/TCP, Port 8080)        │
+├─────────────────────────────────────┤
+│         Tusk Engine (Go)            │
+│  (Master, Listener, NDJSON Proxy)   │
 ├─────────────────────────────────────┤
 │         Framework Layer             │
 │  ┌──────────┐  ┌──────────────────┐ │
 │  │ tusk-web │  │   tusk-micro     │ │
-│  │ (HTTP)   │  │ (Health/Metrics) │ │
+│  │ (Logic)  │  │ (Resilience)     │ │
 │  └──────────┘  └──────────────────┘ │
 │  ┌──────────┐  ┌──────────────────┐ │
 │  │tusk-data │  │   tusk-cli       │ │
-│  │ (Repos)  │  │ (Commands)       │ │
+│  │ (Repos)  │  │ (Command Logic)  │ │
 │  └──────────┘  └──────────────────┘ │
 ├─────────────────────────────────────┤
 │         Runtime Layer               │
 │  ┌──────────────────────────────┐   │
 │  │      tusk-runtime            │   │
-│  │  (Kernel, Supervisor, Pool)  │   │
+│  │  (IPC Loop, Runner, Kernel)  │   │
 │  └──────────────────────────────┘   │
 ├─────────────────────────────────────┤
 │          Core Layer                 │
@@ -44,19 +47,21 @@ Tusk is built on a modular, layered architecture that separates concerns and pro
 
 ### HTTP Request Flow
 
-1. **Server** receives TCP connection (`HttpServer`)
-2. **Parser** converts raw data to `Request` object
-3. **Kernel** dispatches to `Router`
-4. **Router** matches route and resolves `Controller`
-5. **Container** injects dependencies into controller
-6. **Controller** returns `Response`
-7. **Server** sends response back to client
+1. **Tusk Engine (Go)** receives the HTTP request.
+2. **IPC Bridge** forwards the request to a PHP worker over NDJSON.
+3. **Runtime Runner** (PHP) parses the NDJSON into a `Request` object.
+4. **Kernel** dispatches to the `Router`.
+5. **Router** matches the route and resolves the `Controller`.
+6. **Container** injects dependencies into the controller.
+7. **Controller** returns a `Response`.
+8. **Runner** sends the response back to Go over NDJSON to be served.
 
 ### CLI Command Flow
 
-1. **Dispatcher** parses `argv` and selects command
-2. **Command** executes with injected services
-3. **Generator** (for `init`) scaffolds project files
+1. **Tusk Binary (Go)** receives a command (e.g., `init` or `migrate`).
+2. **Command Proxy** determines if it's a native command or framework command.
+3. **PHP Worker** is spawned to execute the logic for framework-aware commands.
+4. **Generator** (for `init`) scaffolds project files.
 4. Exit with status code
 
 ## Component Details

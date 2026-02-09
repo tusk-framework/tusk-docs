@@ -7,7 +7,7 @@ The Tusk CLI provides commands for scaffolding and running applications.
 ### `init` - Create New Project
 
 ```bash
-php tusk.phar init <name> [--type=api|micro]
+tusk init <name> [--type=api|micro]
 ```
 
 **Arguments:**
@@ -19,38 +19,51 @@ php tusk.phar init <name> [--type=api|micro]
 **Example:**
 
 ```bash
-php tusk.phar init my-api
+tusk init my-api
 cd my-api
 composer install
 ```
 
-### `run` - Run Application
+### `start` - Boot the Runtime
 
 ```bash
-php tusk.phar run <file>
+tusk start [--port=8080] [--workers=4]
 ```
 
-**Arguments:**
-- `file` - Entry point file (e.g., `public/index.php`)
+**Options:**
+- `--port` - HTTP port to listen on (overrides `tusk.json`)
+- `--workers` - Number of concurrent PHP workers (overrides `tusk.json`)
 
 **Example:**
 
 ```bash
-php tusk.phar run public/index.php
+tusk start
 ```
 
-Server starts on `http://localhost:8080`
-
-## Building the PHAR
-
-To build `tusk.phar` from source:
+### `setup` - Verify Environment
 
 ```bash
-cd tusk-framework
-php -d phar.readonly=0 tusk-framework/scripts/build_cli.php
+tusk setup
 ```
 
-Output: `build/tusk.phar`
+Checks project structure, PHP availability, and configuration validity.
+
+### Script Proxying (npm-style)
+
+Tusk can execute custom scripts defined in your `tusk.json`:
+
+```json
+"scripts": {
+    "test": "phpunit",
+    "db:migrate": "tusk migrate"
+}
+```
+
+Run them via:
+```bash
+tusk test
+tusk db:migrate
+```
 
 ## Development Workflow
 
