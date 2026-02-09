@@ -35,6 +35,8 @@ nav:
       - Repository: api/repository.md
   - Guides:
       - CLI Usage: guides/cli-usage.md
+      - Testing: guides/testing.md
+      - Authentication: guides/authentication.md
       - Deployment: guides/deployment.md
 
 markdown_extensions:
