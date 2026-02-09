@@ -1,0 +1,44 @@
+site_name: Tusk Framework
+site_description: Domain-first PHP Application Framework
+site_author: Tusk Contributors
+repo_url: https://github.com/tusk-framework/tusk
+repo_name: tusk-framework/tusk
+
+theme:
+  name: material
+  palette:
+    primary: indigo
+    accent: amber
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - toc.integrate
+    - search.suggest
+
+nav:
+  - Home: index.md
+  - Getting Started:
+      - Installation: getting-started/installation.md
+      - Quick Start: getting-started/quickstart.md
+      - Your First App: getting-started/first-app.md
+  - Architecture:
+      - Overview: architecture/overview.md
+      - Core (DI): architecture/core.md
+      - Runtime (Supervisor): architecture/runtime.md
+      - Web (HTTP): architecture/web.md
+      - Data (Repository): architecture/data.md
+      - Micro (Services): architecture/micro.md
+  - API Reference:
+      - Container: api/container.md
+      - Kernel: api/kernel.md
+      - Router: api/router.md
+      - Repository: api/repository.md
+  - Guides:
+      - CLI Usage: guides/cli-usage.md
+      - Deployment: guides/deployment.md
+
+markdown_extensions:
+  - admonition
+  - codehilite
+  - toc:
+      permalink: true
