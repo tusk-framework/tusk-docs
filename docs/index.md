@@ -17,7 +17,7 @@ Tusk is a modern, lightweight PHP framework designed for building high-performan
 
 ```bash
 # Download the CLI
-wget https://github.com/tusk-framework/tusk/releases/latest/download/tusk.phar
+wget https://github.com/tusk-framework/tusk-cli/releases/latest/download/tusk.phar
 
 # Create a new project
 php tusk.phar init my-app
@@ -49,10 +49,10 @@ Tusk follows these core principles:
 
 ## Community
 
-- [GitHub](https://github.com/tusk-framework/tusk)
-- [Issues](https://github.com/tusk-framework/tusk/issues)
-- [Discussions](https://github.com/tusk-framework/tusk/discussions)
+- [GitHub](https://github.com/tusk-framework/tusk-framework)
+- [Issues](https://github.com/tusk-framework/tusk-framework/issues)
+- [Discussions](https://github.com/tusk-framework/tusk-framework/discussions)
 
 ## License
 
-MIT License - see [LICENSE](https://github.com/tusk-framework/tusk/blob/main/LICENSE)
+MIT License - see [LICENSE](https://github.com/tusk-framework/tusk-framework/blob/main/LICENSE)

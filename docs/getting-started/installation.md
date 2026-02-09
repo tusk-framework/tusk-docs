@@ -11,14 +11,14 @@
 The easiest way to get started is with the standalone PHAR executable:
 
 ```bash
-# Download the latest release
-wget https://github.com/tusk-framework/tusk/releases/latest/download/tusk.phar
-
-# Make it executable (Linux/Mac)
+# Linux / macOS
+wget https://github.com/tusk-framework/tusk-cli/releases/latest/download/tusk.phar
 chmod +x tusk.phar
-
-# Move to your PATH (optional)
 sudo mv tusk.phar /usr/local/bin/tusk
+
+# Windows (PowerShell)
+Invoke-WebRequest -Uri https://github.com/tusk-framework/tusk-cli/releases/latest/download/tusk.phar -OutFile tusk.phar
+# You can then run it with: php tusk.phar
 ```
 
 Now you can use `tusk` (or `php tusk.phar`) globally.
@@ -29,7 +29,7 @@ For development or contributing to the framework:
 
 ```bash
 # Clone the monorepo
-git clone https://github.com/tusk-framework/tusk.git
+git clone https://github.com/tusk-framework/tusk-framework.git
 cd tusk
 
 # Install dependencies

@@ -1,8 +1,8 @@
 site_name: Tusk Framework
 site_description: Domain-first PHP Application Framework
 site_author: Tusk Contributors
-repo_url: https://github.com/tusk-framework/tusk
-repo_name: tusk-framework/tusk
+repo_url: https://github.com/tusk-framework/tusk-framework
+repo_name: tusk-framework/tusk-framework
 
 theme:
   name: material
