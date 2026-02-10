@@ -1,0 +1,1706 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Domain-first PHP Application Framework">
+      
+      
+        <meta name="author" content="Tusk Contributors">
+      
+      
+      
+        <link rel="prev" href="../cli-usage/">
+      
+      
+        <link rel="next" href="../authentication/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>Testing - Tusk Framework</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="amber">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#testing-guide" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Tusk Framework" class="md-header__button md-logo" aria-label="Tusk Framework" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Tusk Framework
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Testing
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/tusk-framework/tusk-framework" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    tusk-framework/tusk-framework
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../getting-started/installation/" class="md-tabs__link">
+          
+  
+  
+  Getting Started
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../architecture/overview/" class="md-tabs__link">
+          
+  
+  
+  Architecture
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../api/container/" class="md-tabs__link">
+          
+  
+  
+  API Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../cli-usage/" class="md-tabs__link">
+          
+  
+  
+  Guides
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Tusk Framework" class="md-nav__button md-logo" aria-label="Tusk Framework" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Tusk Framework
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/tusk-framework/tusk-framework" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    tusk-framework/tusk-framework
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Getting Started
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-started/installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Installation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-started/quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quick Start
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-started/first-app/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Your First App
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Architecture
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../architecture/overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../architecture/engine/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Native Engine
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../architecture/core/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Core (DI)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../architecture/runtime/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Runtime (IPC Runner)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../architecture/web/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Web (HTTP)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../architecture/data/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data (Repository)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../architecture/micro/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Micro (Services)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    API Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/container/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Container
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/kernel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kernel
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/router/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Router
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/repository/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Repository
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Guides
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Guides
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cli-usage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI Usage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Testing
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Testing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#unit-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Unit Testing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Unit Testing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#testing-controllers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Testing Controllers
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#testing-repositories" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Testing Repositories
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#integration-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Integration Testing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Integration Testing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#database-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Database Testing
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#http-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        HTTP Testing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="HTTP Testing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#testing-routes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Testing Routes
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#test-fixtures" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Test Fixtures
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Test Fixtures">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#database-fixtures" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Database Fixtures
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#test-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Test Configuration
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Test Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#phpunit-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PHPUnit Configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#running-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Running Tests
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#best-practices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Best Practices
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../authentication/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Authentication
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../deployment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deployment
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="testing-guide">Testing Guide<a class="headerlink" href="#testing-guide" title="Permanent link">&para;</a></h1>
+<p>Learn how to test your Tusk applications effectively.</p>
+<h2 id="unit-testing">Unit Testing<a class="headerlink" href="#unit-testing" title="Permanent link">&para;</a></h2>
+<h3 id="testing-controllers">Testing Controllers<a class="headerlink" href="#testing-controllers" title="Permanent link">&para;</a></h3>
+<div class="codehilite"><pre><span></span><code><span class="x">use PHPUnit\Framework\TestCase;</span>
+<span class="x">use Tusk\Web\Http\Request;</span>
+<span class="x">use App\Controller\UserController;</span>
+
+<span class="x">class UserControllerTest extends TestCase</span>
+<span class="x">{</span>
+<span class="x">    private UserController $controller;</span>
+<span class="x">    private UserRepository $mockRepo;</span>
+
+<span class="x">    protected function setUp(): void</span>
+<span class="x">    {</span>
+<span class="x">        $this-&gt;mockRepo = $this-&gt;createMock(UserRepository::class);</span>
+<span class="x">        $this-&gt;controller = new UserController($this-&gt;mockRepo);</span>
+<span class="x">    }</span>
+
+<span class="x">    public function testListUsers(): void</span>
+<span class="x">    {</span>
+<span class="x">        // Arrange</span>
+<span class="x">        $this-&gt;mockRepo</span>
+<span class="x">            -&gt;expects($this-&gt;once())</span>
+<span class="x">            -&gt;method(&#39;findAll&#39;)</span>
+<span class="x">            -&gt;willReturn([</span>
+<span class="x">                [&#39;id&#39; =&gt; 1, &#39;name&#39; =&gt; &#39;Alice&#39;],</span>
+<span class="x">                [&#39;id&#39; =&gt; 2, &#39;name&#39; =&gt; &#39;Bob&#39;],</span>
+<span class="x">            ]);</span>
+
+<span class="x">        $request = new Request(&#39;GET&#39;, &#39;/users&#39;, [], [], &#39;&#39;);</span>
+
+<span class="x">        // Act</span>
+<span class="x">        $response = $this-&gt;controller-&gt;list($request);</span>
+
+<span class="x">        // Assert</span>
+<span class="x">        $this-&gt;assertEquals(200, $response-&gt;getStatusCode());</span>
+<span class="x">        $data = json_decode($response-&gt;getBody(), true);</span>
+<span class="x">        $this-&gt;assertCount(2, $data);</span>
+<span class="x">    }</span>
+
+<span class="x">    public function testShowUser(): void</span>
+<span class="x">    {</span>
+<span class="x">        // Arrange</span>
+<span class="x">        $this-&gt;mockRepo</span>
+<span class="x">            -&gt;expects($this-&gt;once())</span>
+<span class="x">            -&gt;method(&#39;findById&#39;)</span>
+<span class="x">            -&gt;with(1)</span>
+<span class="x">            -&gt;willReturn([&#39;id&#39; =&gt; 1, &#39;name&#39; =&gt; &#39;Alice&#39;]);</span>
+
+<span class="x">        $request = new Request(&#39;GET&#39;, &#39;/users/1&#39;, [], [], &#39;&#39;);</span>
+
+<span class="x">        // Act</span>
+<span class="x">        $response = $this-&gt;controller-&gt;show($request, 1);</span>
+
+<span class="x">        // Assert</span>
+<span class="x">        $this-&gt;assertEquals(200, $response-&gt;getStatusCode());</span>
+<span class="x">    }</span>
+<span class="x">}</span>
+</code></pre></div>
+
+<h3 id="testing-repositories">Testing Repositories<a class="headerlink" href="#testing-repositories" title="Permanent link">&para;</a></h3>
+<div class="codehilite"><pre><span></span><code><span class="x">use PHPUnit\Framework\TestCase;</span>
+<span class="x">use Tusk\Data\Driver\ConnectionInterface;</span>
+<span class="x">use App\Repository\UserRepository;</span>
+
+<span class="x">class UserRepositoryTest extends TestCase</span>
+<span class="x">{</span>
+<span class="x">    private UserRepository $repo;</span>
+<span class="x">    private ConnectionInterface $mockConnection;</span>
+
+<span class="x">    protected function setUp(): void</span>
+<span class="x">    {</span>
+<span class="x">        $this-&gt;mockConnection = $this-&gt;createMock(ConnectionInterface::class);</span>
+<span class="x">        $this-&gt;repo = new UserRepository($this-&gt;mockConnection);</span>
+<span class="x">    }</span>
+
+<span class="x">    public function testFindById(): void</span>
+<span class="x">    {</span>
+<span class="x">        // Arrange</span>
+<span class="x">        $mockStmt = $this-&gt;createMock(\PDOStatement::class);</span>
+<span class="x">        $mockStmt-&gt;expects($this-&gt;once())</span>
+<span class="x">            -&gt;method(&#39;execute&#39;)</span>
+<span class="x">            -&gt;with([1]);</span>
+<span class="x">        $mockStmt-&gt;expects($this-&gt;once())</span>
+<span class="x">            -&gt;method(&#39;fetch&#39;)</span>
+<span class="x">            -&gt;willReturn([&#39;id&#39; =&gt; 1, &#39;name&#39; =&gt; &#39;Alice&#39;]);</span>
+
+<span class="x">        $this-&gt;mockConnection</span>
+<span class="x">            -&gt;expects($this-&gt;once())</span>
+<span class="x">            -&gt;method(&#39;prepare&#39;)</span>
+<span class="x">            -&gt;with(&#39;SELECT * FROM users WHERE id = ?&#39;)</span>
+<span class="x">            -&gt;willReturn($mockStmt);</span>
+
+<span class="x">        // Act</span>
+<span class="x">        $user = $this-&gt;repo-&gt;findById(1);</span>
+
+<span class="x">        // Assert</span>
+<span class="x">        $this-&gt;assertEquals(1, $user[&#39;id&#39;]);</span>
+<span class="x">        $this-&gt;assertEquals(&#39;Alice&#39;, $user[&#39;name&#39;]);</span>
+<span class="x">    }</span>
+<span class="x">}</span>
+</code></pre></div>
+
+<hr />
+<h2 id="integration-testing">Integration Testing<a class="headerlink" href="#integration-testing" title="Permanent link">&para;</a></h2>
+<h3 id="database-testing">Database Testing<a class="headerlink" href="#database-testing" title="Permanent link">&para;</a></h3>
+<div class="codehilite"><pre><span></span><code><span class="x">use PHPUnit\Framework\TestCase;</span>
+<span class="x">use Tusk\Data\Driver\Pdo\PdoConnection;</span>
+<span class="x">use App\Repository\UserRepository;</span>
+
+<span class="x">class UserRepositoryIntegrationTest extends TestCase</span>
+<span class="x">{</span>
+<span class="x">    private PdoConnection $connection;</span>
+<span class="x">    private UserRepository $repo;</span>
+
+<span class="x">    protected function setUp(): void</span>
+<span class="x">    {</span>
+<span class="x">        // Use SQLite in-memory database for testing</span>
+<span class="x">        $this-&gt;connection = new PdoConnection(&#39;sqlite::memory:&#39;);</span>
+
+<span class="x">        // Create schema</span>
+<span class="x">        $this-&gt;connection-&gt;exec(&#39;</span>
+<span class="x">            CREATE TABLE users (</span>
+<span class="x">                id INTEGER PRIMARY KEY AUTOINCREMENT,</span>
+<span class="x">                name TEXT NOT NULL,</span>
+<span class="x">                email TEXT UNIQUE NOT NULL</span>
+<span class="x">            )</span>
+<span class="x">        &#39;);</span>
+
+<span class="x">        $this-&gt;repo = new UserRepository($this-&gt;connection);</span>
+<span class="x">    }</span>
+
+<span class="x">    public function testCreateAndFind(): void</span>
+<span class="x">    {</span>
+<span class="x">        // Create user</span>
+<span class="x">        $id = $this-&gt;repo-&gt;create([</span>
+<span class="x">            &#39;name&#39; =&gt; &#39;Alice&#39;,</span>
+<span class="x">            &#39;email&#39; =&gt; &#39;alice@example.com&#39;</span>
+<span class="x">        ]);</span>
+
+<span class="x">        // Find user</span>
+<span class="x">        $user = $this-&gt;repo-&gt;findById($id);</span>
+
+<span class="x">        $this-&gt;assertEquals(&#39;Alice&#39;, $user[&#39;name&#39;]);</span>
+<span class="x">        $this-&gt;assertEquals(&#39;alice@example.com&#39;, $user[&#39;email&#39;]);</span>
+<span class="x">    }</span>
+
+<span class="x">    public function testUpdate(): void</span>
+<span class="x">    {</span>
+<span class="x">        $id = $this-&gt;repo-&gt;create([</span>
+<span class="x">            &#39;name&#39; =&gt; &#39;Alice&#39;,</span>
+<span class="x">            &#39;email&#39; =&gt; &#39;alice@example.com&#39;</span>
+<span class="x">        ]);</span>
+
+<span class="x">        $this-&gt;repo-&gt;update($id, [</span>
+<span class="x">            &#39;name&#39; =&gt; &#39;Alice Smith&#39;,</span>
+<span class="x">            &#39;email&#39; =&gt; &#39;alice.smith@example.com&#39;</span>
+<span class="x">        ]);</span>
+
+<span class="x">        $user = $this-&gt;repo-&gt;findById($id);</span>
+<span class="x">        $this-&gt;assertEquals(&#39;Alice Smith&#39;, $user[&#39;name&#39;]);</span>
+<span class="x">    }</span>
+<span class="x">}</span>
+</code></pre></div>
+
+<hr />
+<h2 id="http-testing">HTTP Testing<a class="headerlink" href="#http-testing" title="Permanent link">&para;</a></h2>
+<h3 id="testing-routes">Testing Routes<a class="headerlink" href="#testing-routes" title="Permanent link">&para;</a></h3>
+<div class="codehilite"><pre><span></span><code><span class="x">use PHPUnit\Framework\TestCase;</span>
+<span class="x">use Tusk\Web\Router\Router;</span>
+<span class="x">use Tusk\Web\Http\Request;</span>
+<span class="x">use Tusk\Core\Container\Container;</span>
+
+<span class="x">class RouterTest extends TestCase</span>
+<span class="x">{</span>
+<span class="x">    private Router $router;</span>
+
+<span class="x">    protected function setUp(): void</span>
+<span class="x">    {</span>
+<span class="x">        $container = new Container();</span>
+<span class="x">        $this-&gt;router = new Router($container);</span>
+<span class="x">        $this-&gt;router-&gt;registerControllers([</span>
+<span class="x">            \App\Controller\UserController::class,</span>
+<span class="x">        ]);</span>
+<span class="x">    }</span>
+
+<span class="x">    public function testGetUsers(): void</span>
+<span class="x">    {</span>
+<span class="x">        $request = new Request(&#39;GET&#39;, &#39;/users&#39;, [], [], &#39;&#39;);</span>
+<span class="x">        $response = $this-&gt;router-&gt;dispatch($request);</span>
+
+<span class="x">        $this-&gt;assertEquals(200, $response-&gt;getStatusCode());</span>
+<span class="x">    }</span>
+
+<span class="x">    public function testPostUser(): void</span>
+<span class="x">    {</span>
+<span class="x">        $request = new Request(&#39;POST&#39;, &#39;/users&#39;, </span>
+<span class="x">            [&#39;Content-Type&#39; =&gt; &#39;application/json&#39;],</span>
+<span class="x">            [],</span>
+<span class="x">            json_encode([&#39;name&#39; =&gt; &#39;Alice&#39;, &#39;email&#39; =&gt; &#39;alice@example.com&#39;])</span>
+<span class="x">        );</span>
+
+<span class="x">        $response = $this-&gt;router-&gt;dispatch($request);</span>
+
+<span class="x">        $this-&gt;assertEquals(201, $response-&gt;getStatusCode());</span>
+<span class="x">    }</span>
+
+<span class="x">    public function test404NotFound(): void</span>
+<span class="x">    {</span>
+<span class="x">        $this-&gt;expectException(\Tusk\Web\Exception\RouteNotFoundException::class);</span>
+
+<span class="x">        $request = new Request(&#39;GET&#39;, &#39;/nonexistent&#39;, [], [], &#39;&#39;);</span>
+<span class="x">        $this-&gt;router-&gt;dispatch($request);</span>
+<span class="x">    }</span>
+<span class="x">}</span>
+</code></pre></div>
+
+<hr />
+<h2 id="test-fixtures">Test Fixtures<a class="headerlink" href="#test-fixtures" title="Permanent link">&para;</a></h2>
+<h3 id="database-fixtures">Database Fixtures<a class="headerlink" href="#database-fixtures" title="Permanent link">&para;</a></h3>
+<div class="codehilite"><pre><span></span><code><span class="x">class DatabaseFixtures</span>
+<span class="x">{</span>
+<span class="x">    public static function loadUsers(ConnectionInterface $connection): void</span>
+<span class="x">    {</span>
+<span class="x">        $users = [</span>
+<span class="x">            [&#39;name&#39; =&gt; &#39;Alice&#39;, &#39;email&#39; =&gt; &#39;alice@example.com&#39;],</span>
+<span class="x">            [&#39;name&#39; =&gt; &#39;Bob&#39;, &#39;email&#39; =&gt; &#39;bob@example.com&#39;],</span>
+<span class="x">            [&#39;name&#39; =&gt; &#39;Charlie&#39;, &#39;email&#39; =&gt; &#39;charlie@example.com&#39;],</span>
+<span class="x">        ];</span>
+
+<span class="x">        $stmt = $connection-&gt;prepare(&#39;</span>
+<span class="x">            INSERT INTO users (name, email) VALUES (?, ?)</span>
+<span class="x">        &#39;);</span>
+
+<span class="x">        foreach ($users as $user) {</span>
+<span class="x">            $stmt-&gt;execute([$user[&#39;name&#39;], $user[&#39;email&#39;]]);</span>
+<span class="x">        }</span>
+<span class="x">    }</span>
+<span class="x">}</span>
+
+<span class="x">// Usage in tests</span>
+<span class="x">protected function setUp(): void</span>
+<span class="x">{</span>
+<span class="x">    parent::setUp();</span>
+<span class="x">    DatabaseFixtures::loadUsers($this-&gt;connection);</span>
+<span class="x">}</span>
+</code></pre></div>
+
+<hr />
+<h2 id="test-configuration">Test Configuration<a class="headerlink" href="#test-configuration" title="Permanent link">&para;</a></h2>
+<h3 id="phpunit-configuration">PHPUnit Configuration<a class="headerlink" href="#phpunit-configuration" title="Permanent link">&para;</a></h3>
+<div class="codehilite"><pre><span></span><code><span class="cm">&lt;!-- phpunit.xml --&gt;</span>
+<span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class="nt">&lt;phpunit</span><span class="w"> </span><span class="na">bootstrap=</span><span class="s">&quot;vendor/autoload.php&quot;</span>
+<span class="w">         </span><span class="na">colors=</span><span class="s">&quot;true&quot;</span>
+<span class="w">         </span><span class="na">verbose=</span><span class="s">&quot;true&quot;</span><span class="nt">&gt;</span>
+<span class="w">    </span><span class="nt">&lt;testsuites&gt;</span>
+<span class="w">        </span><span class="nt">&lt;testsuite</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;Unit&quot;</span><span class="nt">&gt;</span>
+<span class="w">            </span><span class="nt">&lt;directory&gt;</span>tests/Unit<span class="nt">&lt;/directory&gt;</span>
+<span class="w">        </span><span class="nt">&lt;/testsuite&gt;</span>
+<span class="w">        </span><span class="nt">&lt;testsuite</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;Integration&quot;</span><span class="nt">&gt;</span>
+<span class="w">            </span><span class="nt">&lt;directory&gt;</span>tests/Integration<span class="nt">&lt;/directory&gt;</span>
+<span class="w">        </span><span class="nt">&lt;/testsuite&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/testsuites&gt;</span>
+
+<span class="w">    </span><span class="nt">&lt;coverage&gt;</span>
+<span class="w">        </span><span class="nt">&lt;include&gt;</span>
+<span class="w">            </span><span class="nt">&lt;directory</span><span class="w"> </span><span class="na">suffix=</span><span class="s">&quot;.php&quot;</span><span class="nt">&gt;</span>src<span class="nt">&lt;/directory&gt;</span>
+<span class="w">        </span><span class="nt">&lt;/include&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/coverage&gt;</span>
+<span class="nt">&lt;/phpunit&gt;</span>
+</code></pre></div>
+
+<h3 id="running-tests">Running Tests<a class="headerlink" href="#running-tests" title="Permanent link">&para;</a></h3>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Run all tests</span>
+./vendor/bin/phpunit
+
+<span class="c1"># Run specific suite</span>
+./vendor/bin/phpunit<span class="w"> </span>--testsuite<span class="w"> </span>Unit
+
+<span class="c1"># Run with coverage</span>
+./vendor/bin/phpunit<span class="w"> </span>--coverage-html<span class="w"> </span>coverage/
+</code></pre></div>
+
+<hr />
+<h2 id="best-practices">Best Practices<a class="headerlink" href="#best-practices" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>Test Isolation</strong> - Each test should be independent</li>
+<li><strong>Mock External Dependencies</strong> - Don't hit real databases/APIs in unit tests</li>
+<li><strong>Use In-Memory Databases</strong> - SQLite for integration tests</li>
+<li><strong>Descriptive Test Names</strong> - <code>testCreateUserWithValidData()</code></li>
+<li><strong>Arrange-Act-Assert</strong> - Structure tests clearly</li>
+<li><strong>Test Edge Cases</strong> - Not just happy paths</li>
+<li><strong>Keep Tests Fast</strong> - Unit tests should run in milliseconds</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "toc.integrate", "search.suggest"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
