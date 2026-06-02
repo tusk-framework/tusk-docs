@@ -35,6 +35,7 @@ nav:
       - Router: api/router.md
       - Repository: api/repository.md
   - Guides:
+      - Engine & Framework Integration: guides/engine-integration.md
       - CLI Usage: guides/cli-usage.md
       - Testing: guides/testing.md
       - Authentication: guides/authentication.md
