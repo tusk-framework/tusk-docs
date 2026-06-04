@@ -1,88 +1,88 @@
-# Integração: Engine e Framework
+# Integration: Engine and Framework
 
-O **Tusk Engine** e o **Tusk Framework** foram desenhados para trabalhar em perfeita harmonia. O Engine provê um servidor web de altíssima performance em Go, enquanto o Framework constrói a lógica de negócio através de um container robusto no PHP. 
+The **Tusk Engine** and **Tusk Framework** were designed to work in perfect harmony. The Engine provides an ultra-high performance web server in Go, while the Framework builds the business logic through a robust container in PHP.
 
-Diferente do ecossistema clássico (Apache + mod_php ou Nginx + PHP-FPM), o Tusk trabalha com o conceito de **Long-Lived Process** (Processos de Longa Duração).
+Unlike the classic ecosystem (Apache + mod_php or Nginx + PHP-FPM), Tusk works with the concept of **Long-Lived Process**.
 
-## O Problema do "Boot-and-Die"
+## The "Boot-and-Die" Problem
 
-Em um servidor tradicional como o Apache, a cada nova requisição HTTP:
-1. Um novo processo do PHP é criado.
-2. O framework é inteiramente carregado na memória (autoloader, configurações, container de injeção de dependência).
-3. A rota é resolvida e a resposta é gerada.
-4. O processo PHP é destruído.
+In a traditional server like Apache, on every new HTTP request:
+1. A new PHP process is created.
+2. The framework is entirely loaded into memory (autoloader, configurations, dependency injection container).
+3. The route is resolved and the response is generated.
+4. The PHP process is destroyed.
 
-Esse ciclo (conhecido como *boot-and-die*) consome uma grande quantidade de recursos e adiciona latência, apenas para fazer o "boot" da aplicação.
+This cycle (known as *boot-and-die*) consumes a massive amount of resources and adds latency just to "boot" the application.
 
-## A Solução do Tusk
+## The Tusk Solution
 
-Com o Tusk, a sua aplicação faz o "boot" **apenas uma vez**.
+With Tusk, your application "boots" **only once**.
 
-O `tusk-engine` (em Go) gerencia um ou mais processos do PHP em background. Quando uma requisição HTTP chega ao servidor, o Go converte os dados da requisição para **NDJSON** (Newline Delimited JSON) e injeta diretamente no `STDIN` do processo PHP que já está rodando. O framework processa a requisição e devolve a resposta no `STDOUT`.
+The `tusk-engine` (in Go) manages one or more PHP processes in the background. When an HTTP request arrives at the server, Go converts the request data to **NDJSON** (Newline Delimited JSON) and injects it directly into the `STDIN` of the PHP process that is already running. The framework processes the request and returns the response via `STDOUT`.
 
-Isso significa que conexões de banco de dados, containers e rotas já estão prontos em memória!
+This means that database connections, containers, and routes are already ready in memory!
 
-## Como Funciona na Prática
+## How It Works in Practice
 
-Ao iniciar um projeto usando o Tusk Framework, você terá um arquivo chamado `worker.php` na raiz do seu projeto. Ele atua como a ponte entre o Engine e o Framework.
+When starting a project using the Tusk Framework, you will have a file named `worker.php` in the root of your project. It acts as the bridge between the Engine and the Framework.
 
-### O Arquivo `worker.php`
+### The `worker.php` File
 
-Um worker básico do Tusk tem a seguinte estrutura:
+A basic Tusk worker has the following structure:
 
 ```php
 <?php
 
-// Requer o autoloader do Composer
+// Require the Composer autoloader
 require 'vendor/autoload.php';
 
 use Tusk\Core\Container\Container;
 use Tusk\Runtime\Kernel;
 use Tusk\Runtime\Adapters\NativeLoopAdapter;
 
-// Inicializa o Container de Injeção de Dependência
+// Initialize the Dependency Injection Container
 $container = new Container();
 
-// Inicializa o Kernel informando que usaremos o NativeLoopAdapter (Comunicação NDJSON)
+// Initialize the Kernel stating that we will use the NativeLoopAdapter (NDJSON Communication)
 $kernel = new Kernel($container, new NativeLoopAdapter());
 
-// O método start() é bloqueante! Ele cria o loop infinito que aguardará as requisições da Engine.
+// The start() method is blocking! It creates the infinite loop that will wait for requests from the Engine.
 $kernel->start();
 ```
 
-Ao rodar o comando `tusk start` no terminal, o Engine detecta o `tusk.json` (ou `composer.json`) e inicia automaticamente esse `worker.php`.
+By running the `tusk start` command in the terminal, the Engine detects `tusk.json` (or `composer.json`) and automatically starts this `worker.php`.
 
-## Rodando em Produção (Docker)
+## Running in Production (Docker)
 
-Por ser uma arquitetura autocontida (onde o `tusk-engine` substitui o Apache/Nginx e o PHP-FPM), colocar o Tusk em produção com Docker é extremamente simples e resulta em imagens muito leves.
+Because it is a self-contained architecture (where `tusk-engine` replaces Apache/Nginx and PHP-FPM), putting Tusk in production with Docker is extremely simple and results in very lightweight images.
 
-### Exemplo de Dockerfile
+### Dockerfile Example
 
-Aqui está um exemplo funcional usando a imagem Alpine do PHP CLI:
+Here is a functional example using the Alpine PHP CLI image:
 
 ```dockerfile
-# Usamos apenas a versão CLI do PHP (sem FPM, sem Apache)
+# We use only the CLI version of PHP (no FPM, no Apache)
 FROM php:8.2-cli-alpine
 
-# Instala a versão mais recente do Tusk Engine em Go
+# Install the latest version of the Tusk Engine in Go
 RUN curl -L https://github.com/tusk-framework/tusk-engine/releases/latest/download/tusk_Linux_x86_64.tar.gz | tar xz \
     && mv tusk /usr/local/bin/tusk \
     && chmod +x /usr/local/bin/tusk
 
-# Define o diretório de trabalho
+# Set the working directory
 WORKDIR /app
 
-# Copia os arquivos do projeto
+# Copy project files
 COPY . .
 
-# Instala as dependências de produção do Framework
+# Install the Framework's production dependencies
 RUN composer install --no-dev --optimize-autoloader
 
-# Expõe a porta padrão que o tusk-engine usa
+# Expose the default port used by tusk-engine
 EXPOSE 8080
 
-# Inicia o servidor de aplicação
+# Start the application server
 CMD ["tusk", "start", "worker.php"]
 ```
 
-Com esse Dockerfile, você tem um servidor web pronto para produção em um único container, consumindo o mínimo de RAM e oferecendo uma velocidade excepcional graças à comunicação NDJSON entre o Go e o PHP.
+With this Dockerfile, you have a production-ready web server in a single container, consuming minimum RAM and delivering exceptional speed thanks to the NDJSON communication between Go and PHP.
