@@ -1,113 +1,29 @@
 # Quick Start
 
-This guide will walk you through creating your first Tusk application in under 5 minutes.
+Create a project, check its prerequisites, and start it under RoadRunner.
 
-## Create a Project
+## Create the project
 
-```bash
-tusk init my-api
-cd my-api
+```sh
+composer create-project tusk-framework/app catalog
+cd catalog
 ```
 
-This generates:
-- `composer.json` - Dependency configuration
-- `docker-compose.yml` - Local development environment
-- `public/index.php` - Application entry point
-- `src/Controller/HomeController.php` - Sample controller
+Composer creates the application and installs its dependencies. The app entry
+point is `bootstrap/app.php`; you do not need to create a root `worker.php`.
 
-## Install Dependencies
+## Diagnose and start
 
-```bash
-composer install
-```
-
-## Run the Server
-
-### Option 1: Native Startup (Recommended)
-
-```bash
+```sh
+tusk doctor
 tusk start
 ```
 
-This boots the Go engine and spawns PHP workers automatically. Visit `http://localhost:8080`.
+`tusk doctor` reports the project and toolchain status. `tusk start` validates
+the application bootstrap, generates the RoadRunner configuration, and
+supervises RoadRunner. RoadRunner listens for HTTP requests and manages the PHP
+workers. The default application address is `http://127.0.0.1:8080` unless
+changed in `tusk.json`.
 
-### Option 2: Docker (Containerized)
-
-If you have Docker installed, you can pull the official engine image:
-
-```bash
-docker pull ghcr.io/tusk-framework/tusk-engine:main
-docker run -p 8080:8080 -v $(pwd):/app ghcr.io/tusk-framework/tusk-engine:main
-```
-
-Visit `http://localhost:8080`
-
-## Your First Endpoint
-
-The generated project includes a sample controller:
-
-```php
-<?php
-namespace App\Controller;
-
-use Tusk\Web\Attribute\Route;
-use Tusk\Web\Http\Request;
-use Tusk\Web\Http\Response;
-
-class HomeController
-{
-    #[Route('/', methods: ['GET'])]
-    public function index(Request $request): Response
-    {
-        return new Response(200, ['Content-Type' => 'application/json'], json_encode([
-            'message' => 'Welcome to Tusk!',
-            'version' => '0.7.0'
-        ]));
-    }
-}
-```
-
-## Add a New Route
-
-Create `src/Controller/UserController.php`:
-
-```php
-<?php
-namespace App\Controller;
-
-use Tusk\Web\Attribute\Route;
-use Tusk\Web\Http\Request;
-use Tusk\Web\Http\Response;
-
-class UserController
-{
-    #[Route('/users', methods: ['GET'])]
-    public function list(Request $request): Response
-    {
-        $users = [
-            ['id' => 1, 'name' => 'Alice'],
-            ['id' => 2, 'name' => 'Bob'],
-        ];
-        
-        return new Response(200, ['Content-Type' => 'application/json'], 
-            json_encode($users));
-    }
-}
-```
-
-Register it in `public/index.php`:
-
-```php
-$router->registerControllers([
-    \App\Controller\HomeController::class,
-    \App\Controller\UserController::class, // Add this
-]);
-```
-
-Visit `http://localhost:8080/users` to see your new endpoint!
-
-## Next Steps
-
-- Learn about [Your First App](first-app.md) with database integration
-- Explore the [Architecture](../architecture/overview.md)
-- Read the [CLI Usage Guide](../guides/cli-usage.md)
+Try the sample endpoint with
+[Your First App](first-app.md), or read about [CLI commands](../guides/cli-usage.md).

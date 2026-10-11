@@ -45,7 +45,7 @@ Docs may be implemented independently after this plan is approved. Engine harnes
 ### Files / behavior
 
 - `composer.json`: set package name to `tusk-framework/app`; retain `type: project`; require the actually published compatible stable Framework major.
-- `README.md`: canonical `composer create-project tusk-framework/app <directory>` flow, then `tusk doctor`, `tusk build`, `tusk start`; explain the sample `/api/products` route is in-memory and not persistence.
+- `README.md`: canonical `composer create-project tusk-framework/app <directory>` flow, then `tusk doctor` and `tusk start`; explain the sample `/api/products` route is in-memory and not persistence. Do not include `tusk build`.
 - Existing manifest/package identity tests (locate current test path before editing): assert the exact vendor/package name and project type; reject old `tusk/app` identity and local/dev dependencies.
 - Any metadata or install instructions in the skeleton must use the Composer package name while keeping GitHub repository slug `tusk-framework/tusk-app`.
 
@@ -83,16 +83,18 @@ Rewrite only pages that contradict the merged spec/current CLI; inspect each pag
 - `docs/architecture/engine.md`
 - `docs/architecture/overview.md`
 - `docs/architecture/runtime.md`
+- `docs/architecture/web.md` (currently advertises a removed PHP socket server).
+- `docs/api/kernel.md` (currently documents removed Kernel methods and a removed HTTP server).
 - `mkdocs.yml` navigation labels where they describe removed Native Engine behavior.
 
-Present one verified path: install Engine prerequisites, `composer create-project tusk-framework/app <directory>`, `cd <directory>`, `tusk doctor`, `tusk build`, `tusk start`, then request the sample endpoint. Explain which component owns each action; distinguish Engine lifecycle supervision from RoadRunner's HTTP/worker ownership; state the in-memory sample limitation. Remove active user-doc claims about Engine-owned request pools/IPC, NDJSON, root `worker.php`, native HTTP transport, or `tusk init <name>` scaffolding. Preserve unrelated guides only after verifying their examples against current code.
+Present one verified path: install Engine prerequisites, `composer create-project tusk-framework/app <directory>`, `cd <directory>`, `tusk doctor`, `tusk start`, then request the sample endpoint. Explain which component owns each action; distinguish Engine lifecycle supervision from RoadRunner's HTTP/worker ownership; state the in-memory sample limitation. Do not document `tusk build`: the CLI has no such built-in command, configuration generation happens during `tusk start`, and no build artifact is currently defined. Revisit only alongside a concrete build/optimization design. Remove active user-doc claims about Engine-owned request pools/IPC, NDJSON, root `worker.php`, native HTTP transport, or `tusk init <name>` scaffolding. Preserve unrelated guides only after verifying their examples against current code.
 
 ### TDD / verification
 
-1. Add a small documentation contract check (or extend an existing one if present) before the rewrite: assert required canonical commands and ownership terms, and reject obsolete runtime claims in active user-facing pages. Keep historical specs/archives outside the active-page scan.
+1. Add `tests/test_golden_path_docs.py` before the rewrite. Assert the public create-project command plus `tusk doctor` and `tusk start`; assert active onboarding pages do not show an unsupported `tusk build` command; verify RoadRunner owns HTTP/workers; reject obsolete runtime claims in active pages. Keep historical specs/archives outside the active-page scan.
 2. Rewrite pages/navigation; run that focused check and search active docs for `worker.php`, `NDJSON`, `tusk init <name>`, and claims that Engine owns HTTP/worker pools. Review each hit rather than blindly deleting valid API references.
 3. Install dependencies using the repository's documented MkDocs setup and run `mkdocs build --strict`.
-4. Add `.github/workflows/validate.yml` to install the same MkDocs dependencies and run `mkdocs build --strict` on pull requests and pushes to `main`; use a supported Python version, pinned or bounded dependencies consistent with repository deployment, and least permissions. Verify workflow syntax and local command before opening the PR.
+4. Add `.github/workflows/validate.yml` to install MkDocs and its Material theme, run `python -m unittest discover -s tests -v`, and run `mkdocs build --strict` on pull requests and pushes to `main`; use a supported Python version and read-only repository permissions. Verify workflow syntax and commands before opening the PR.
 5. Open the PR with rendered navigation/page list and exact build evidence. If package installation/network is unavailable, do not claim strict-build success; leave that check pending and report the environmental blocker.
 
 ## PR 3 — Engine clean public-consumer smoke
@@ -106,7 +108,7 @@ Present one verified path: install Engine prerequisites, `composer create-projec
 - Add a dedicated `test/skeleton/public-app.ps1` (or equivalent isolated test harness) and focused Go contract tests for its invocation/acceptance behavior where practical.
 - Extend `.github/workflows/test.yml` to run this consumer smoke in addition to, not instead of, the existing comprehensive generated-skeleton/local-Framework smoke.
 - Use a fresh temporary directory, public `composer create-project`, the built Engine binary, CI's actual RoadRunner binary, and no local Framework checkout/path repository/dev package.
-- Exercise the documented sequence `tusk doctor`, `tusk build`, `tusk start`; use a bounded readiness loop and request `POST /api/products`, asserting HTTP 201 and the expected response shape. Verify Engine exits non-zero on failed stages, preserve useful logs, and always terminate/reap Engine, RoadRunner, and PHP children on success/failure/timeout.
+- Exercise the documented sequence `tusk doctor`, `tusk start`; verify startup generates the RoadRunner configuration and use a bounded readiness loop to request `POST /api/products`, asserting HTTP 201 and the expected response shape. Verify Engine exits non-zero on failed stages, preserve useful logs, and always terminate/reap Engine, RoadRunner, and PHP children on success/failure/timeout.
 - Use dynamically allocated loopback ports where supported; avoid races from probe-then-bind if the CLI can accept a port through generated config. Confirm actual generated config and CLI behavior before choosing the port injection mechanism.
 - Keep existing `test/skeleton/smoke.ps1` semantics and its local Framework path override intact; this new smoke is separate specifically to cover published-consumer behavior.
 
@@ -124,7 +126,7 @@ After the App package is indexed and all three PRs are merged:
 
 1. From an empty temporary directory not nested under any repository, run the exact documented `composer create-project tusk-framework/app ...` command.
 2. Verify the installed Framework is a stable published major and run the skeleton's test suite/manifest validation.
-3. Run `tusk doctor`, `tusk build`, `tusk start`; send the documented HTTP request and assert the response through RoadRunner.
+3. Run `tusk doctor`, `tusk start`; send the documented HTTP request and assert the response through RoadRunner.
 4. Run `mkdocs build --strict` and the active-doc obsolete-claim scan.
 5. Record exact versions, commands/results, and links to the App/Engine/Docs PRs on Framework issue #9; close it only if every acceptance criterion passes. If Packagist account/indexing is blocked, keep #9 open and report precisely which external step remains.
 

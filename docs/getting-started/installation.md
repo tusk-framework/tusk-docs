@@ -2,79 +2,42 @@
 
 ## Requirements
 
-- PHP 8.2 or higher
-- Composer (for dependency management)
-- PDO extension (for database access)
+- PHP 8.2 or newer with the extensions required by your application.
+- Composer 2 for creating the project and installing PHP dependencies.
+- The Tusk Engine binary on your `PATH` as `tusk`.
+- RoadRunner (`rr`) available to the Engine at runtime.
 
-## One-Line Installation (Recommended)
+`tusk doctor` diagnoses the selected tools but does not install them. Install
+and manage PHP and RoadRunner using your platform's package/release workflow,
+or follow the Engine's explicit toolchain-provisioning documentation when a
+verified catalog is configured.
 
-Get Tusk and a portable PHP runtime installed in seconds.
+## Install the Engine
 
-### Linux / macOS
-```bash
-curl -fsSL https://tusk.sh/install.sh | bash
+Download the archive for your operating system and architecture from the
+[Tusk Engine releases](https://github.com/tusk-framework/tusk-engine/releases),
+then put the `tusk` executable on your `PATH`. Follow the release asset's
+included instructions for your platform.
+
+## Create an application
+
+```sh
+composer create-project tusk-framework/app catalog
+cd catalog
 ```
 
-### Windows (PowerShell)
-```powershell
-iwr -useb https://tusk.sh/install.ps1 | iex
+Before starting the server, verify that the project bootstrap and required
+tools are available:
+
+```sh
+tusk doctor
 ```
 
-These scripts download the `tusk` binary and a pre-configured PHP runtime into `~/.tusk` (or `%USERPROFILE%\.tusk`) and add them to your PATH.
+Continue to the [Quick Start](quickstart.md) to run the app.
 
----
+## Contributing to the Framework
 
-## Docker (Containerized)
-
-Tusk provides a ready-to-use Docker image via the GitHub Container Registry (GHCR). This is perfect for CI/CD or production environments.
-
-### Pull the Image
-```bash
-docker pull ghcr.io/tusk-framework/tusk-engine:main
-```
-
-### Run a Local Project
-Map your project directory to `/app` inside the container:
-```bash
-docker run -p 8080:8080 -v $(pwd):/app ghcr.io/tusk-framework/tusk-engine:main
-```
-
----
-
-## Manual Installation
-
-If you prefer to manage your own PHP version:
-
-1. Download the latest `tusk` binary for your platform from [Releases](https://github.com/tusk-framework/tusk-engine/releases).
-2. Add the binary to your system PATH.
-3. Ensure you have PHP 8.2+ installed.
-
-## Via Composer
-
-For development or contributing to the framework:
-
-```bash
-# Clone the monorepo
-git clone https://github.com/tusk-framework/tusk-framework.git
-cd tusk
-
-# Install dependencies
-composer install
-```
-
-## Verify Installation
-
-```bash
-tusk setup
-```
-
-**Output:**
-```text
-Project Root: /home/user/project
-PHP Found: /home/user/.tusk/php/bin/php
-Tusk is ready to go!
-```
-
-## Next Steps
-
-Continue to [Quick Start](quickstart.md) to create your first project.
+To work on the Framework source itself, clone
+[tusk-framework/tusk-framework](https://github.com/tusk-framework/tusk-framework)
+and follow its `CONTRIBUTING.md`. Cloning the Framework is not required to
+create an application.

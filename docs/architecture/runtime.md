@@ -1,29 +1,29 @@
-## The Runner (`Tusk\Runtime\Runner`)
+# Runtime Lifecycle
 
-The `Runner` is the heart of the PHP worker. It handles the continuous IPC loop with the Go Master Process.
+The Engine manages RoadRunner's lifecycle; it does not implement a separate
+PHP request loop.
 
-```php
-use Tusk\Runtime\Runner;
+## Startup
 
-// Runner::run() starts the blocking NDJSON loop
-Runner::run($kernel);
-```
+1. `tusk doctor` reports project bootstrap and toolchain diagnostics.
+2. `tusk start` validates `bootstrap/app.php` and project configuration.
+3. The Engine generates RoadRunner configuration and private worker state
+   under `.tusk/runtime/`.
+4. The Engine starts RoadRunner and monitors runtime readiness and process
+   health.
 
-### IPC Lifecycle
-1. **Wait**: The Runner waits for a newline-delimited JSON string on `stdin`.
-2. **Boot**: It parses the request and executes the Kernel.
-3. **Flush**: It writes the response as NDJSON to `stdout` and signals readiness for the next request.
+## Request handling
 
-## Kernel Integration
+RoadRunner accepts HTTP traffic and dispatches requests to persistent PHP
+workers. Each worker loads the Composer autoloader and application bootstrap;
+the Framework handles each request. RoadRunner owns worker pooling, recycling,
+and worker process shutdown. Application code should treat workers as
+long-lived and avoid leaking request-specific state.
 
-The `Kernel` manages the application state across multiple requests. Because workers are persistent, the Kernel can cache containers, DB connections, and pre-compiled templates.
+## Shutdown and diagnostics
 
-## Process Manager
+The Engine supervises RoadRunner and coordinates shutdown when it receives a
+termination signal. `tusk doctor` diagnoses the local project/toolchain;
+Engine control and metrics endpoints, when enabled, report runtime operations.
 
-Cross-platform process management (Windows/Linux compatible).
-
-## Worker Pool
-
-Manage multiple worker processes for parallel task execution.
-
-*Full documentation coming soon.*
+The RoadRunner configuration is generated as part of `tusk start`.

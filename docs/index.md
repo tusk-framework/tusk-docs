@@ -1,50 +1,42 @@
 # Tusk Framework
 
-**Domain-first PHP Application Framework**
+Tusk is a PHP application framework for building HTTP APIs and services with
+an explicit application bootstrap and long-lived PHP workers.
 
-Tusk is a modern, lightweight PHP framework designed for building high-performance web applications and microservices. Built with PHP 8.2+, it emphasizes clean architecture, developer experience, and production readiness.
+The Tusk Engine is the Go control plane: it diagnoses project prerequisites,
+generates the RoadRunner runtime configuration at startup, and supervises the
+RoadRunner process. RoadRunner owns HTTP transport and the PHP worker pool. The
+Framework owns application bootstrap, routing, dependency injection, and
+request handling.
 
-## Key Features
+## Quick start
 
-- **Native Go Engine**: Replaces Nginx and PHP-FPM with a single, high-performance Go binary.
-- **Unified CLI**: One tool (`tusk`) for server management, scaffolding, and custom scripts.
-- **Persistent Runtime**: Applications stay in memory, drastically reducing latency.
-- **Sidecar PHP**: Automatic management of a portable PHP runtime for zero-dependency deployment.
-- **Domain-First Framework**: Clean architecture patterns (DI, Repository, Events) built for performance.
+Requirements: PHP 8.2 or newer, Composer, the Tusk Engine, and a RoadRunner
+binary available to the Engine. See [Installation](getting-started/installation.md)
+for setup details.
 
-## Quick Start
-
-```bash
-# Install Tusk globally
-curl -sSL https://tusk.sh/install.sh | bash
-
-# Create a project
-tusk init my-app
-
-# Start the runtime
-cd my-app
+```sh
+composer create-project tusk-framework/app catalog
+cd catalog
+tusk doctor
 tusk start
 ```
 
-Visit `http://localhost:8080` to see your app running!
+The sample app includes a small product API. Its data is in memory for
+demonstration; use a database-backed repository for persistent or shared state.
+See [Your First App](getting-started/first-app.md) to try the endpoint.
 
-## Philosophy
+## Architecture
 
-Tusk follows these core principles:
+```text
+Client → RoadRunner (HTTP + PHP workers) → Tusk Framework application
+                    ↑
+          supervised by Tusk Engine
+```
 
-1. **Domain-First**: Your business logic comes first, not the framework
-2. **Explicit over Magic**: Clear, readable code over hidden conventions
-3. **Performance**: Native implementations, minimal overhead
-4. **Developer Experience**: Fast scaffolding, clear errors, great tooling
-
-## Components
-
-- **tusk/core**: Dependency injection and kernel contracts
-- **tusk/runtime**: Process manager and supervisor
-- **tusk/web**: HTTP server, router, and request handling
-- **tusk/data**: Database abstraction and repository pattern
-- **tusk/micro**: Microservice utilities (health, metrics, RPC)
-- **tusk/cli**: Command-line tools and scaffolding
+The Engine manages runtime lifecycle; it is not a second HTTP server or worker
+pool. Read the [architecture overview](architecture/overview.md) and
+[Engine integration guide](guides/engine-integration.md) for the boundaries.
 
 ## Community
 
@@ -54,4 +46,4 @@ Tusk follows these core principles:
 
 ## License
 
-MIT License - see [LICENSE](https://github.com/tusk-framework/tusk-framework/blob/main/LICENSE)
+MIT License — see the [Framework repository](https://github.com/tusk-framework/tusk-framework/blob/main/LICENSE).

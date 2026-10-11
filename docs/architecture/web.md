@@ -1,37 +1,31 @@
-# Web (HTTP)
+# Web and Routing
 
-The `tusk-web` component provides HTTP server, routing, and request handling.
+The Framework's web layer matches routes, resolves controllers, applies
+middleware, and handles PSR-7 server requests. RoadRunner provides the HTTP
+listener and dispatches requests to the PHP worker; `Tusk\Web\HttpKernel` is
+an application request handler, not a socket-based HTTP server.
 
-## Native HTTP Server
+RoadRunner owns the HTTP listener and PHP worker pool.
 
-Pure PHP socket-based server (no Nginx/Apache required):
+## Attribute routes
 
-```php
-use Tusk\Web\Server\HttpServer;
-
-$server = new HttpServer('127.0.0.1', 8080, $kernel);
-$server->start();
-```
-
-## Router
-
-Attribute-based routing:
+The router discovers controller methods marked with `#[Route]`. A controller
+can return a PSR-7 response; arrays and objects are encoded as JSON by the
+HTTP kernel.
 
 ```php
 use Tusk\Web\Attribute\Route;
 
-class UserController
+final class StatusController
 {
-    #[Route('/users/{id}', methods: ['GET'])]
-    public function show(int $id): Response
+    #[Route('/status', methods: ['GET'])]
+    public function show(): array
     {
-        // ...
+        return ['status' => 'ok'];
     }
 }
 ```
 
-## Request/Response
-
-PSR-7 compatible request and response objects.
-
-*Full documentation coming soon.*
+The standard application skeleton registers controllers from `app/Controller`
+and starts them through the Framework bootstrap and RoadRunner runtime. See
+[Your First App](../getting-started/first-app.md) for a runnable example.
