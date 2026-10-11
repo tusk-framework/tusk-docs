@@ -1,117 +1,31 @@
 # Your First App
 
-Let's build a simple Todo API with database persistence.
+The project skeleton includes a small typed product API at
+`/api/products`. It demonstrates JSON input validation and returning an HTTP
+response through the Framework and RoadRunner.
 
-## Setup Database
+Start the application from its project directory:
 
-Update `docker-compose.yml` (already included in generated project):
-
-```yaml
-services:
-  db:
-    image: mysql:8.0
-    environment:
-      MYSQL_ROOT_PASSWORD: secret
-      MYSQL_DATABASE: todos
+```sh
+tusk doctor
+tusk start
 ```
 
-## Create Repository
+In another terminal, create a product:
 
-`src/Repository/TodoRepository.php`:
-
-```php
-<?php
-namespace App\Repository;
-
-use Tusk\Data\Repository\AbstractRepository;
-
-class TodoRepository extends AbstractRepository
-{
-    public function findAll(): array
-    {
-        $stmt = $this->connection->query('SELECT * FROM todos');
-        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
-    }
-    
-    public function create(string $title): int
-    {
-        $stmt = $this->connection->prepare(
-            'INSERT INTO todos (title, completed) VALUES (?, 0)'
-        );
-        $stmt->execute([$title]);
-        return (int) $this->connection->lastInsertId();
-    }
-}
+```sh
+curl -i \
+  -H 'Content-Type: application/json' \
+  -H 'Accept: application/json' \
+  -d '{"name":"Notebook","sku":"NOTE-1"}' \
+  http://127.0.0.1:8080/api/products
 ```
 
-## Create Controller
+The example stores products in process memory. It is intended to demonstrate
+the request path, not persistence: workers do not share their in-memory state,
+and that state is lost when a worker restarts. Use a database-backed repository
+for application data that must persist or be shared across workers.
 
-`src/Controller/TodoController.php`:
-
-```php
-<?php
-namespace App\Controller;
-
-use App\Repository\TodoRepository;
-use Tusk\Web\Attribute\Route;
-use Tusk\Web\Http\Request;
-use Tusk\Web\Http\Response;
-
-class TodoController
-{
-    public function __construct(
-        private TodoRepository $todos
-    ) {}
-    
-    #[Route('/todos', methods: ['GET'])]
-    public function list(Request $request): Response
-    {
-        $todos = $this->todos->findAll();
-        return new Response(200, ['Content-Type' => 'application/json'],
-            json_encode($todos));
-    }
-    
-    #[Route('/todos', methods: ['POST'])]
-    public function create(Request $request): Response
-    {
-        $data = json_decode($request->getBody(), true);
-        $id = $this->todos->create($data['title']);
-        
-        return new Response(201, ['Content-Type' => 'application/json'],
-            json_encode(['id' => $id]));
-    }
-}
-```
-
-## Run Migrations
-
-Create `migrations/001_create_todos.sql`:
-
-```sql
-CREATE TABLE todos (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    title VARCHAR(255) NOT NULL,
-    completed BOOLEAN DEFAULT FALSE,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-```
-
-Run it:
-
-```bash
-docker-compose exec db mysql -uroot -psecret todos < migrations/001_create_todos.sql
-```
-
-## Test It
-
-```bash
-# List todos
-curl http://localhost:8080/todos
-
-# Create todo
-curl -X POST http://localhost:8080/todos \
-  -H "Content-Type: application/json" \
-  -d '{"title":"Learn Tusk"}'
-```
-
-Congratulations! You've built a working API with Tusk.
+The application bootstrap is `bootstrap/app.php`; routes and controllers live
+in the application source. See the [Framework API guides](../api/router.md)
+when extending the example.

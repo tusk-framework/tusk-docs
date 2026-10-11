@@ -1,79 +1,55 @@
 # CLI Usage
 
-The Tusk CLI provides commands for scaffolding and running applications.
+Run the `tusk` CLI from the application directory. Use `tusk --help` in the
+installed Engine version for the complete command list.
 
-## Commands
+## Diagnose the project
 
-### `init` - Create New Project
-
-```bash
-tusk init <name> [--type=api|micro]
+```sh
+tusk doctor
+tusk doctor --json
 ```
 
-**Arguments:**
-- `name` - Project name (required)
+The diagnostic report helps identify the application bootstrap and toolchain
+executables used by the project. It does not install tools or change the
+machine.
 
-**Options:**
-- `--type` - Project type: `api` (default) or `micro`
+## Start the application
 
-**Example:**
-
-```bash
-tusk init my-api
-cd my-api
-composer install
-```
-
-### `start` - Boot the Runtime
-
-```bash
-tusk start [--port=8080] [--workers=4]
-```
-
-**Options:**
-- `--port` - HTTP port to listen on (overrides `tusk.json`)
-- `--workers` - Number of concurrent PHP workers (overrides `tusk.json`)
-
-**Example:**
-
-```bash
+```sh
 tusk start
 ```
 
-### `setup` - Verify Environment
+The Engine validates the application bootstrap, generates RoadRunner's
+configuration, and supervises the runtime. `tusk dev` is an alias for `tusk
+start`.
 
-```bash
-tusk setup
+## Configure the project
+
+`tusk init` initializes Engine configuration (`tusk.json`) in an existing
+project; it does not scaffold a PHP application. To create a new app, use
+Composer's `create-project` command with `tusk-framework/app`.
+
+The Engine reads platform settings from `tusk.json`. Composer owns package
+dependencies, the lockfile, and Composer scripts in `composer.json`.
+
+## Toolchain commands
+
+```sh
+tusk toolchain list
+tusk toolchain pin php@8.3
 ```
 
-Checks project structure, PHP availability, and configuration validity.
+Toolchain setup is explicit. Read the Engine's
+[offline documentation](https://github.com/tusk-framework/tusk-engine/blob/main/docs/user-guide/index.md)
+before provisioning managed tools.
 
-### Script Proxying (npm-style)
+## Offline documentation
 
-Tusk can execute custom scripts defined in your `tusk.json`:
-
-```json
-"scripts": {
-    "test": "phpunit",
-    "db:migrate": "tusk migrate"
-}
+```sh
+tusk docs
+tusk docs runtime
 ```
 
-Run them via:
-```bash
-tusk test
-tusk db:migrate
-```
-
-## Development Workflow
-
-1. **Scaffold**: `tusk init my-app`
-2. **Develop**: Edit controllers, services
-3. **Test**: `tusk run public/index.php`
-4. **Deploy**: Use Docker Compose or native server
-
-## Tips
-
-- Use `--type=micro` for microservice projects (includes health checks)
-- The generated `docker-compose.yml` includes MySQL by default
-- Edit `composer.json` to add dependencies
+The installed Engine includes version-matched documentation, so these pages
+remain available without opening the website.
