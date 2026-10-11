@@ -1,0 +1,1334 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Domain-first PHP Application Framework">
+      
+      
+        <meta name="author" content="Tusk Contributors">
+      
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Tusk Application Golden Path Implementation Plan - Tusk Framework</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="amber">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#tusk-application-golden-path-implementation-plan" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Tusk Framework" class="md-header__button md-logo" aria-label="Tusk Framework" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Tusk Framework
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Tusk Application Golden Path Implementation Plan
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/tusk-framework/tusk-framework" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    tusk-framework/tusk-framework
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../getting-started/installation/" class="md-tabs__link">
+          
+  
+  
+  Getting Started
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../architecture/overview/" class="md-tabs__link">
+          
+  
+  
+  Architecture
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../api/container/" class="md-tabs__link">
+          
+  
+  
+  API Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../guides/engine-integration/" class="md-tabs__link">
+          
+  
+  
+  Guides
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Tusk Framework" class="md-nav__button md-logo" aria-label="Tusk Framework" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Tusk Framework
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/tusk-framework/tusk-framework" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    tusk-framework/tusk-framework
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Getting Started
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../getting-started/installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Installation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../getting-started/quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quick Start
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../getting-started/first-app/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Your First App
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Architecture
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../architecture/overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../architecture/engine/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Engine Control Plane
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../architecture/core/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Core (DI)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../architecture/runtime/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Runtime (RoadRunner)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../architecture/web/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Web (HTTP)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../architecture/data/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data (Repository)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../architecture/micro/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Micro (Services)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    API Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/container/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Container
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/kernel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kernel
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/router/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Router
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/repository/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Repository
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Guides
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Guides
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/engine-integration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Engine & Framework Integration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/cli-usage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI Usage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/testing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Testing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/authentication/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Authentication
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/deployment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deployment
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="tusk-application-golden-path-implementation-plan">Tusk Application Golden Path Implementation Plan<a class="headerlink" href="#tusk-application-golden-path-implementation-plan" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p><strong>For agentic workers:</strong> REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Keep each repository change in its own PR/worktree and verify every acceptance criterion before reporting completion.</p>
+</blockquote>
+<p><strong>Goal:</strong> Deliver and verify one public, stable path from a clean Composer install to a Tusk application served by RoadRunner, consistently across the App skeleton, Engine, and Docs.</p>
+<p><strong>Architecture:</strong> Composer creates the project; the Framework owns application bootstrap and request handling; the Engine validates/configures and supervises RoadRunner; RoadRunner owns HTTP transport and PHP workers. No Engine proxy or second worker pool is introduced. Framework's separately reviewed breaking cleanup and major release is a prerequisite to publishing the App skeleton against that API.</p>
+<p><strong>Tech Stack:</strong> PHP 8.2+, Composer/Packagist, Go CLI, RoadRunner, PowerShell smoke harness (Linux CI), MkDocs Material.</p>
+<p><strong>Spec:</strong> <code>docs/superpowers/specs/2026-10-10-application-golden-path-design.md</code> (merged in Docs PR #3).</p>
+<h2 id="global-constraints">Global Constraints<a class="headerlink" href="#global-constraints" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Update each repository's local <code>main</code> from <code>origin/main</code> and verify its tracked baseline before creating implementation branches/worktrees.</li>
+<li>Never use <code>codex/</code> in branch names. Use conventional repository prefixes and lowercase kebab-case.</li>
+<li>Preserve existing user worktrees and untracked files; all repository work is delivered through separate PRs.</li>
+<li>Do not begin the Framework mock/discovery removal from this plan. Framework PR #61 is a separate draft design-review gate; only after its spec is approved should that work receive its own implementation plan and approval. Publish the resulting Framework major before changing/registering the App package.</li>
+<li>Confirm the actual published Framework tag before setting the App constraint (expected <code>^1.0.0</code>, not an assumption).</li>
+<li>Never use a local path repository or <code>dev-*</code> Framework dependency to prove the public consumer path.</li>
+<li>Keep <code>tuskpress</code> an example, not a product requirement. Do not add a gateway, native server, service mesh, duplicate worker pool, or unrelated app features.</li>
+<li>Do not commit Packagist credentials or webhook secrets. If account-level package registration is unavailable, stop at the external prerequisite and report it.</li>
+<li>Issue #9 is closed only after all public-package/runtime/docs evidence is recorded.</li>
+</ul>
+<h2 id="dependency-order">Dependency Order<a class="headerlink" href="#dependency-order" title="Permanent link">&para;</a></h2>
+<div class="codehilite"><pre><span></span><code>Framework PR #61 spec review → separately planned implementation → breaking major release
+                                                        ↓
+                                      App identity + Packagist publication
+                                      ↙                       ↘
+                         Engine public-consumer smoke       Docs rewrite/build
+                                      ↘                       ↙
+                                  clean end-to-end proof → Framework issue #9
+</code></pre></div>
+
+<p>Docs may be implemented independently after this plan is approved. Engine harness work can be prepared independently, but its public-package run is gated on App registration and stable indexing. Framework PR #61 must not be treated as implementation approval merely because its checks are green.</p>
+<h2 id="pr-1-app-package-identity-and-public-installation">PR 1 — App package identity and public installation<a class="headerlink" href="#pr-1-app-package-identity-and-public-installation" title="Permanent link">&para;</a></h2>
+<p><strong>Repository:</strong> <code>tusk-app</code><br />
+<strong>Branch:</strong> <code>chore/packagist-app-identity</code><br />
+<strong>Prerequisite:</strong> Framework breaking cleanup merged and its compatible stable major is available from Packagist.</p>
+<h3 id="files-behavior">Files / behavior<a class="headerlink" href="#files-behavior" title="Permanent link">&para;</a></h3>
+<ul>
+<li><code>composer.json</code>: set package name to <code>tusk-framework/app</code>; retain <code>type: project</code>; require the actually published compatible stable Framework major.</li>
+<li><code>README.md</code>: canonical <code>composer create-project tusk-framework/app &lt;directory&gt;</code> flow, then <code>tusk doctor</code> and <code>tusk start</code>; explain the sample <code>/api/products</code> route is in-memory and not persistence. Do not include <code>tusk build</code>.</li>
+<li>Existing manifest/package identity tests (locate current test path before editing): assert the exact vendor/package name and project type; reject old <code>tusk/app</code> identity and local/dev dependencies.</li>
+<li>Any metadata or install instructions in the skeleton must use the Composer package name while keeping GitHub repository slug <code>tusk-framework/tusk-app</code>.</li>
+</ul>
+<h3 id="tdd-verification">TDD / verification<a class="headerlink" href="#tdd-verification" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Add/update manifest tests first; run the focused test and confirm it fails on the old name/constraint.</li>
+<li>Change manifest and README; run the focused test and full App test suite.</li>
+<li>Run <code>composer validate --strict</code> and <code>composer install --no-interaction --prefer-dist</code> from a clean temporary copy.</li>
+<li>Verify the installed <code>composer.lock</code> resolves a stable Framework tag satisfying the new constraint, with no path repository and no <code>dev-*</code> package version.</li>
+<li>Verify CI's supported PHP matrix (currently 8.2–8.5) and open a PR with the standard summary, rationale, verification, and release-impact sections.</li>
+</ol>
+<h3 id="packagist-release-gate-external-account-action">Packagist release gate (external account action)<a class="headerlink" href="#packagist-release-gate-external-account-action" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Register <code>tusk-framework/app</code> from the <code>tusk-framework/tusk-app</code> GitHub repository only after the manifest points at the published Framework major.</li>
+<li>Configure Packagist's GitHub auto-update hook using Packagist/GitHub UI or authorized tooling; keep credentials out of source and logs.</li>
+<li>Verify a package metadata refresh and then run <code>composer create-project tusk-framework/app &lt;empty-temp-directory&gt; --no-interaction --prefer-dist</code> from outside all Tusk checkouts.</li>
+<li>Confirm package metadata/version and installed Framework version from Composer output/lockfile. A webhook HTTP 2xx alone is insufficient proof of indexing.</li>
+</ol>
+<h2 id="pr-2-docs-canonical-getting-started-path">PR 2 — Docs canonical getting-started path<a class="headerlink" href="#pr-2-docs-canonical-getting-started-path" title="Permanent link">&para;</a></h2>
+<p><strong>Repository:</strong> <code>tusk-docs</code><br />
+<strong>Branch:</strong> <code>docs/published-app-golden-path</code></p>
+<h3 id="files-behavior_1">Files / behavior<a class="headerlink" href="#files-behavior_1" title="Permanent link">&para;</a></h3>
+<p>Rewrite only pages that contradict the merged spec/current CLI; inspect each page before editing:</p>
+<ul>
+<li><code>docs/index.md</code></li>
+<li><code>docs/getting-started/installation.md</code></li>
+<li><code>docs/getting-started/quickstart.md</code></li>
+<li><code>docs/getting-started/first-app.md</code></li>
+<li><code>docs/guides/cli-usage.md</code></li>
+<li><code>docs/guides/deployment.md</code></li>
+<li><code>docs/guides/engine-integration.md</code></li>
+<li><code>docs/architecture/engine.md</code></li>
+<li><code>docs/architecture/overview.md</code></li>
+<li><code>docs/architecture/runtime.md</code></li>
+<li><code>docs/architecture/web.md</code> (currently advertises a removed PHP socket server).</li>
+<li><code>docs/api/kernel.md</code> (currently documents removed Kernel methods and a removed HTTP server).</li>
+<li><code>mkdocs.yml</code> navigation labels where they describe removed Native Engine behavior.</li>
+</ul>
+<p>Present one verified path: install Engine prerequisites, <code>composer create-project tusk-framework/app &lt;directory&gt;</code>, <code>cd &lt;directory&gt;</code>, <code>tusk doctor</code>, <code>tusk start</code>, then request the sample endpoint. Explain which component owns each action; distinguish Engine lifecycle supervision from RoadRunner's HTTP/worker ownership; state the in-memory sample limitation. Do not document <code>tusk build</code>: the CLI has no such built-in command, configuration generation happens during <code>tusk start</code>, and no build artifact is currently defined. Revisit only alongside a concrete build/optimization design. Remove active user-doc claims about Engine-owned request pools/IPC, NDJSON, root <code>worker.php</code>, native HTTP transport, or <code>tusk init &lt;name&gt;</code> scaffolding. Preserve unrelated guides only after verifying their examples against current code.</p>
+<h3 id="tdd-verification_1">TDD / verification<a class="headerlink" href="#tdd-verification_1" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Add <code>tests/test_golden_path_docs.py</code> before the rewrite. Assert the public create-project command plus <code>tusk doctor</code> and <code>tusk start</code>; assert active onboarding pages do not show an unsupported <code>tusk build</code> command; verify RoadRunner owns HTTP/workers; reject obsolete runtime claims in active pages. Keep historical specs/archives outside the active-page scan.</li>
+<li>Rewrite pages/navigation; run that focused check and search active docs for <code>worker.php</code>, <code>NDJSON</code>, <code>tusk init &lt;name&gt;</code>, and claims that Engine owns HTTP/worker pools. Review each hit rather than blindly deleting valid API references.</li>
+<li>Install dependencies using the repository's documented MkDocs setup and run <code>mkdocs build --strict</code>.</li>
+<li>Add <code>.github/workflows/validate.yml</code> to install MkDocs and its Material theme, run <code>python -m unittest discover -s tests -v</code>, and run <code>mkdocs build --strict</code> on pull requests and pushes to <code>main</code>; use a supported Python version and read-only repository permissions. Verify workflow syntax and commands before opening the PR.</li>
+<li>Open the PR with rendered navigation/page list and exact build evidence. If package installation/network is unavailable, do not claim strict-build success; leave that check pending and report the environmental blocker.</li>
+</ol>
+<h2 id="pr-3-engine-clean-public-consumer-smoke">PR 3 — Engine clean public-consumer smoke<a class="headerlink" href="#pr-3-engine-clean-public-consumer-smoke" title="Permanent link">&para;</a></h2>
+<p><strong>Repository:</strong> <code>tusk-engine</code><br />
+<strong>Branch:</strong> <code>test/public-app-golden-path</code>
+<strong>Prerequisite for public run:</strong> App package registered and <code>composer create-project</code> succeeds from Packagist.</p>
+<h3 id="files-behavior_2">Files / behavior<a class="headerlink" href="#files-behavior_2" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Add a dedicated <code>test/skeleton/public-app.ps1</code> (or equivalent isolated test harness) and focused Go contract tests for its invocation/acceptance behavior where practical.</li>
+<li>Extend <code>.github/workflows/test.yml</code> to run this consumer smoke in addition to, not instead of, the existing comprehensive generated-skeleton/local-Framework smoke.</li>
+<li>Use a fresh temporary directory, public <code>composer create-project</code>, the built Engine binary, CI's actual RoadRunner binary, and no local Framework checkout/path repository/dev package.</li>
+<li>Exercise the documented sequence <code>tusk doctor</code>, <code>tusk start</code>; verify startup generates the RoadRunner configuration and use a bounded readiness loop to request <code>POST /api/products</code>, asserting HTTP 201 and the expected response shape. Verify Engine exits non-zero on failed stages, preserve useful logs, and always terminate/reap Engine, RoadRunner, and PHP children on success/failure/timeout.</li>
+<li>Use dynamically allocated loopback ports where supported; avoid races from probe-then-bind if the CLI can accept a port through generated config. Confirm actual generated config and CLI behavior before choosing the port injection mechanism.</li>
+<li>Keep existing <code>test/skeleton/smoke.ps1</code> semantics and its local Framework path override intact; this new smoke is separate specifically to cover published-consumer behavior.</li>
+</ul>
+<h3 id="tdd-verification_2">TDD / verification<a class="headerlink" href="#tdd-verification_2" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Add harness contract tests first for the command sequence, no local/path/dev dependency, non-zero failures, bounded startup, HTTP assertion, and cleanup path; demonstrate failure before implementation.</li>
+<li>Implement the isolated script and workflow invocation. Exercise on Linux with PHP, Composer, Go, RoadRunner, and a real published App package.</li>
+<li>Run <code>go test ./...</code>, <code>go vet ./...</code>, existing skeleton smoke, and the new public smoke. Confirm the new test runs in CI rather than silently returning a skipped success when a required public prerequisite is absent.</li>
+<li>Capture Engine/RoadRunner logs on failure and verify the harness cleans all child processes. Keep credentials/secrets out of logs and test artifacts.</li>
+<li>Open a separate PR with explicit public package/version and smoke evidence.</li>
+</ol>
+<h2 id="final-acceptance-and-issue-9">Final acceptance and issue #9<a class="headerlink" href="#final-acceptance-and-issue-9" title="Permanent link">&para;</a></h2>
+<p>After the App package is indexed and all three PRs are merged:</p>
+<ol>
+<li>From an empty temporary directory not nested under any repository, run the exact documented <code>composer create-project tusk-framework/app ...</code> command.</li>
+<li>Verify the installed Framework is a stable published major and run the skeleton's test suite/manifest validation.</li>
+<li>Run <code>tusk doctor</code>, <code>tusk start</code>; send the documented HTTP request and assert the response through RoadRunner.</li>
+<li>Run <code>mkdocs build --strict</code> and the active-doc obsolete-claim scan.</li>
+<li>Record exact versions, commands/results, and links to the App/Engine/Docs PRs on Framework issue #9; close it only if every acceptance criterion passes. If Packagist account/indexing is blocked, keep #9 open and report precisely which external step remains.</li>
+</ol>
+<h2 id="review-focus">Review Focus<a class="headerlink" href="#review-focus" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Does the public Composer package use exactly <code>tusk-framework/app</code>, retain <code>type: project</code>, and resolve a stable compatible Framework release?</li>
+<li>Does any proof accidentally depend on a local checkout, <code>path</code> repository, or <code>dev-*</code> release?</li>
+<li>Does documentation assign HTTP transport and PHP worker lifecycle to RoadRunner, not Engine?</li>
+<li>Are sample state limitations clear, without promoting TuskPress or claiming persistence?</li>
+<li>Can a failing or hung smoke stage be diagnosed, return non-zero, and clean up its entire child-process tree?</li>
+<li>Does CI actually execute both the existing development smoke and the new public-consumer smoke?</li>
+<li>Are Packagist registration, webhook refresh, and successful clean install verified as distinct steps?</li>
+<li>Is Framework issue #9 left open until release, public install, runtime, docs build, and evidence are all complete?</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.sections", "toc.integrate", "search.suggest"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>
